@@ -21,8 +21,10 @@ const thoughtSchema = new mongoose.Schema({
     }
 
 
-
-
 });
 
-userSchema.plugin(uniqueValidator);
+// Create the Thought Model based on the schema above
+const Thought = mongoose.model('Thought', thoughtSchema);
+
+//Exports this Model
+module.exports = Thought;

@@ -23,9 +23,13 @@ const userSchema = new mongoose.Schema({
         friends: XXX
     },    
 
-
-
-
 });
 
+// Create the User Model based on the schema above
+const User = mongoose.model('User', userSchema);
+
+//Invokes the Unique Email Validator Plugin
 userSchema.plugin(uniqueValidator);
+
+//Exports this Model
+module.exports = User;
