@@ -16,7 +16,9 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
     getsingleUser(req, res) {
-        User.findOne({_id: req.params.id})
+        var userId = req.params.userId;
+        console.log("req params.userId:", req.params.userId)
+        User.findOne({_id: req.params.userId})
         // .select('-__v')
         // .populate('thought')
         .then((user) =>
