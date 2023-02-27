@@ -1,6 +1,9 @@
 // Require Express Server
 const express = require('express');
 
+// Require Routes
+const routes = require('./routes')
+
 //Import connection file to DB
 const db = require('./config/connection')
 
@@ -15,6 +18,9 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
+app.use(routes);
+
+
 
 //Start Server with Connection to DB
 db.once('open', () => {

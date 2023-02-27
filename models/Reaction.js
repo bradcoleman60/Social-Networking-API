@@ -20,7 +20,7 @@ const reactionSchema = new mongoose.Schema({
         //Format the timestamp on query? 
     },
     
-});
+}, {collection: 'Reaction'});
 
 // Create the Thought Model based on the schema above
 const Reaction = mongoose.model('Reaction', reactionSchema);

@@ -1,6 +1,9 @@
 // Define Mongoose
 const mongoose = require('mongoose');
 
+//Require schema
+const { Schema, model} = require('mongoose')
+
 //Require Email Validator
 const uniqueValidator = require('mongoose-unique-validator');
 
@@ -16,14 +19,18 @@ const userSchema = new mongoose.Schema({
         required: true, 
         unique: true, 
         match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
-    thoughts: {
-        thoughts: Thought
-    },
-    friends:{
-        friends: XXX
-    },    
-
-});
+    thoughts: [
+        {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought',
+    }],
+    friends:[
+        {
+        type: Schema.Types.ObjectID,
+        ref: 'User',
+    }],    
+    
+}, {collection: 'User'});
 
 // Create the User Model based on the schema above
 const User = mongoose.model('User', userSchema);

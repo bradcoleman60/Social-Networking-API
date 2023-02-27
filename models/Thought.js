@@ -1,3 +1,6 @@
+
+const { Schema, model} = require('mongoose')
+
 // Define Mongoose
 const mongoose = require('mongoose');
 
@@ -15,13 +18,16 @@ const thoughtSchema = new mongoose.Schema({
     },
     username: {
         type: String, 
-        required: true},
-    reactions: {
-    //    Array of ractions
-    }
+        required: true,
+    },
+    reactions: [
+        {
+        type: Schema.Types.ObjectId,
+        ref: 'Reaction'
+    }]
 
 
-});
+}, {collection: 'Thought'});
 
 // Create the Thought Model based on the schema above
 const Thought = mongoose.model('Thought', thoughtSchema);
