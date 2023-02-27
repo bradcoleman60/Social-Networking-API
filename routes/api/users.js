@@ -17,6 +17,9 @@ router.route('/').get(getUsers);
 //Get User by ID
 router.route('/:id').get(getsingleUser)
 
+//POST Route to Create a new User
+router.route('/').get(getUsers).post(createUser)
+
 module.exports = router;
 
 // router.post('/', (req, res) => {
@@ -44,9 +47,7 @@ module.exports = router;
 // GET one User by _id and populate thought and friend data
 
 
-//POST Route to Create a new User
 
-router.route('/').get(getUsers).post(createUser)
 // router.route('/').post(createUser)
 
 
