@@ -34,4 +34,30 @@ module.exports = {
         .then((dbUserData) => res.json(dbUserData))
         .catch((err) => res.status(500).json(err));
     },
+    //Create a New Friend
+    createFriend(req,res) {
+        var userIdX = req.params.userId;
+        var friendIdX = req.params.friendId;
+        console.log("userIdX", userIdX);
+        console.log("friendIdX", friendIdX);
+        console.log("rec.params:", req.params),
+
+        User.findOneAndUpdate(
+                
+                {_id: req.params.userId},
+                { $addToSet: {friends: req.params.friendId}},
+                { new: true}
+        )
+        
+        .then((userIdX, friendIdX) => 
+            
+            !User.findOne(userIdX) || !User.findOne(friendIdX)
+            ? res.status(404).json({message: 'Friend ID or User ID does not exist'})
+            : res.json('Friend Added to User')
+            )
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err)
+            });
+    },
 };

@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const express = require('express');
 
-const {getUsers, createUser, getsingleUser} = require('../../controllers/userController')
+const {getUsers, createUser, getsingleUser, createFriend} = require('../../controllers/userController')
 
 const {User, Thought, Reaction} = require('../../models')
 
@@ -15,10 +15,14 @@ const app = express();
 router.route('/').get(getUsers);
 
 //Get User by ID
-router.route('/:id').get(getsingleUser)
+router.route('/:userId').get(getsingleUser);
 
 //POST Route to Create a new User
-router.route('/').get(getUsers).post(createUser)
+router.route('/').get(getUsers).post(createUser);
+
+//POST Route to Add a Friend to a User
+router.route('/:userId/friends/:friendId').get(getUsers).post(createFriend);
+
 
 module.exports = router;
 
