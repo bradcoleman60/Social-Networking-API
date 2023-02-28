@@ -6,9 +6,6 @@ const db = require('../config/connection')
 
 module.exports = {
     getThoughts(req, res) {
-        // console.log('Getting all users');
-        // console.log('Database:', db.socialnetworkDB);
-        // console.log('Collection:', User.collection.name)
         Thought.find()
         .then((thoughts) => {
             console.log("this is the thought:", thoughts);
