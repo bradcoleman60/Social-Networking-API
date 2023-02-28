@@ -1,6 +1,9 @@
 const User  = require('../models/User')
 
+const Thought  = require('../models/Thought')
+
 const db = require('../config/connection')
+
 
 module.exports = {
     // Get all users
@@ -9,7 +12,11 @@ module.exports = {
         // console.log('Database:', db.socialnetworkDB);
         // console.log('Collection:', User.collection.name)
         User.find()
-        .then((users) => {
+        .select('-__V')
+        .populate('thoughts')
+        .populate('friends')
+        .lean()
+        .then((users) => { 
             console.log("this is the users:", users);
             res.json(users)
         })
@@ -39,7 +46,7 @@ module.exports = {
     //Update existing User
     updateUser(req, res) {
             console.log("req.body:", req.body)
-            console.log("req.bod.thoughtText: ", req.body.email)
+            console.log("req.body.email: ", req.body.email)
             console.log("User Id:", req.params.userId)
             User.findOneAndUpdate(
                 { _id: req.params.userId},
@@ -53,17 +60,35 @@ module.exports = {
                 .catch((err) => res.status(500).json(err))
     
      },
+     //Delete a User and any associated Thoughts
+     deleteUser(req, res) {
+        console.log(req.params)
+        User.findByIdAndRemove({ _id: req.params.userId})
+        .then((user) => 
+            !user
+                ? res.status(404).json({message: 'No user with that id exists'})
+                : Thought.deleteMany({username: user.username})
+               
+        )
+        .then((thoughts) => 
+            !thoughts
+              ? res
+               .status(404)
+               .json({ message: 'Thought deleted but no user was identified'})
+          : res.json({ message: 'User and all Thoughts were deleted'})
+        ) 
+        .catch((err) => res.status(500).json(err))
+        
+    },
+     
     //Create a New Friend
     createFriend(req,res) {
         var userIdX = req.params.userId;
         var friendIdX = req.params.friendId;
-        console.log("userIdX", userIdX);
-        console.log("friendIdX", friendIdX);
-        console.log("rec.params:", req.params),
-
+        
         User.findOneAndUpdate(
                 
-                {_id: req.params.userId},
+                { _id: req.params.userId},
                 { $addToSet: {friends: req.params.friendId}},
                 { new: true}
         )
@@ -79,4 +104,25 @@ module.exports = {
                 res.status(500).json(err)
             });
     },
+    //Delete a Friend from a User
+    deleteFriend(req, res) {
+        User.findOneAndUpdate(
+                
+            {_id: req.params.userId},
+            { $pull: {friends: req.params.friendId}},
+            { new: true}
+    )
+    .then((user) => 
+            !user
+              ? res
+               .status(404)
+               .json({ message: 'Friend was deleted but no user was identified'})
+          : res.json({ message: 'Friend was deleted'})
+        ) 
+        .catch((err) => res.status(500).json(err))
+
+
+    }
 };
+
+

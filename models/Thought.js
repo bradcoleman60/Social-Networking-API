@@ -1,6 +1,8 @@
 
 const { Schema, model} = require('mongoose')
 
+const format = require('date-format');
+
 // Define Mongoose
 const mongoose = require('mongoose');
 
@@ -14,7 +16,7 @@ const thoughtSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.NOW 
+        default: format('MM-dd-yyyy',new Date())
     },
     username: {
         type: String, 
@@ -22,12 +24,28 @@ const thoughtSchema = new mongoose.Schema({
     },
     reactions: [
         {
-        type: Schema.Types.ObjectId,
-        ref: 'Reaction'
+        reactionBody: {
+            type: String,
+            required: true,
+            minLength: 1,
+            maxLength: 280
+            
+        },
+        username: {
+            type: String,
+            required: true
+        } 
     }]
 
 
 }, {collection: 'Thought'});
+
+thoughtSchema
+    .virtual('createdAtFormatted')
+    // Getter
+    .get(function (){
+        return format('MM-dd-yyyy', this.createdAt)
+    })
 
 // Create the Thought Model based on the schema above
 const Thought = mongoose.model('Thought', thoughtSchema);

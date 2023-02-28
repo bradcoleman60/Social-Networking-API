@@ -30,7 +30,21 @@ const userSchema = new mongoose.Schema({
         ref: 'User',
     }],    
     
-}, {collection: 'User'});
+}, 
+{collection: 'User'},
+{
+    toJSON: {
+      virtuals: true,
+    },
+    id: false,
+  }
+
+);
+
+userSchema
+    .virtual('friendsCount').get(function (){
+        return this.friends.length
+    })
 
 // Create the User Model based on the schema above
 const User = mongoose.model('User', userSchema);

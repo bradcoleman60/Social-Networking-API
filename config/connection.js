@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.set('strictQuery', true);
+
 // Wrap Mongoose around the local connection to MongoDB
 mongoose.connect('mongodb://localhost:27017/socialnetworkDB', {
     useNewUrlParser: true,

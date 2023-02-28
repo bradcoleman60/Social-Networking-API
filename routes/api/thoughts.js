@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {User, Thought, Reaction} = require('../../models')
 
-const {getThoughts, createThought, getThoughtById, deleteThought, updateThought} = require('../../controllers/thoughtController')
+const {getThoughts, createThought, getThoughtById, deleteThought, updateThought, createReaction} = require('../../controllers/thoughtController')
 
 // GET all Thoughts
 router.route('/').get(getThoughts)
@@ -18,6 +18,14 @@ router.route('/:thoughtId').get(getThoughts).put(updateThought);
 
 // DELETE a thought by its _id
 router.route('/:thoughtId').get(getThoughts).delete(deleteThought);
+
+
+//POST Route to Add a Reaction to a Thought
+router.route('/:thoughtId/Reaction').get(getThoughts).post(createReaction);
+
+//DELETE Route to delete a Reaction
+// router.route('/:thoughtId/reaction').get(getThoughts).delete(deleteReaction);
+
 
 //////////////////////////////////
 
