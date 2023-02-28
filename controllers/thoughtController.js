@@ -108,7 +108,26 @@ module.exports = {
             });
     },
     
+    //Delete a Reaction
+    deleteReaction(req,res) {
+        console.log(req.params)
+           Thought.findOneAndUpdate(
+                    
+                { _id: req.params.thoughtId},
+                { $pull: {reactions: {_id: req.params.reactionId}}},
+                { new: true}
+        )
+        .then((thoughts) => 
+                !thoughts
+                  ? res
+                   .status(404)
+                   .json({ message: 'Reaction was deleted but no Thought was identified'})
+              : res.json({ message: 'Reaction was deleted'})
+            ) 
+            .catch((err) => res.status(500).json(err))
     
+    
+        }
     
 
 

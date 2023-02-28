@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {User, Thought, Reaction} = require('../../models')
 
-const {getThoughts, createThought, getThoughtById, deleteThought, updateThought, createReaction} = require('../../controllers/thoughtController')
+const {getThoughts, createThought, getThoughtById, deleteThought, updateThought, createReaction, deleteReaction} = require('../../controllers/thoughtController')
 
 // GET all Thoughts
 router.route('/').get(getThoughts)
@@ -24,7 +24,7 @@ router.route('/:thoughtId').get(getThoughts).delete(deleteThought);
 router.route('/:thoughtId/Reaction').get(getThoughts).post(createReaction);
 
 //DELETE Route to delete a Reaction
-// router.route('/:thoughtId/reaction').get(getThoughts).delete(deleteReaction);
+router.route('/:thoughtId/reactions/:reactionId').get(getThoughts).delete(deleteReaction);
 
 
 //////////////////////////////////
