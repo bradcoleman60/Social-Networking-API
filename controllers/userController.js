@@ -36,6 +36,23 @@ module.exports = {
         .then((dbUserData) => res.json(dbUserData))
         .catch((err) => res.status(500).json(err));
     },
+    //Update existing User
+    updateUser(req, res) {
+            console.log("req.body:", req.body)
+            console.log("req.bod.thoughtText: ", req.body.email)
+            console.log("User Id:", req.params.userId)
+            User.findOneAndUpdate(
+                { _id: req.params.userId},
+                { $set: {email: req.body.email}},
+                { returnOriginal: false}
+                )
+                .then((user) => {
+                    console.log("this is the updated User: ", user);
+                    res.json(user)
+                })
+                .catch((err) => res.status(500).json(err))
+    
+     },
     //Create a New Friend
     createFriend(req,res) {
         var userIdX = req.params.userId;

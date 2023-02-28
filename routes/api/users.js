@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const express = require('express');
 
-const {getUsers, createUser, getsingleUser, createFriend} = require('../../controllers/userController')
+const {getUsers, createUser, getsingleUser, updateUser, createFriend} = require('../../controllers/userController')
 
 const {User, Thought, Reaction} = require('../../models')
 
@@ -19,6 +19,9 @@ router.route('/:userId').get(getsingleUser);
 
 //POST Route to Create a new User
 router.route('/').get(getUsers).post(createUser);
+
+//PUT To update User
+router.route('/:userId').get(getUsers).put(updateUser);
 
 //POST Route to Add a Friend to a User
 router.route('/:userId/friends/:friendId').get(getUsers).post(createFriend);
