@@ -31,9 +31,10 @@ const userSchema = new mongoose.Schema({
     }],    
     
 }, 
-{collection: 'User'},
 {
-    toJSON: {
+collection: 'User',
+versionKey: false,
+ toJSON: {
       virtuals: true,
     },
     id: false,

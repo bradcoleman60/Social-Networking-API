@@ -12,10 +12,11 @@ module.exports = {
         // console.log('Database:', db.socialnetworkDB);
         // console.log('Collection:', User.collection.name)
         User.find()
-        .select('-__V')
+        // .select('-__V')
         .populate('thoughts')
         .populate('friends')
         .lean()
+        
         .then((users) => { 
             console.log("this is the users:", users);
             res.json(users)

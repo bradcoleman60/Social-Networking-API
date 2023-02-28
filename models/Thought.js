@@ -36,9 +36,17 @@ const thoughtSchema = new mongoose.Schema({
             required: true
         } 
     }]
+}, 
+{
+collection: 'Thought',
+versionKey: false,
+toJSON: {
+    virtuals: true,
+     },
+     id: false,
+      }
 
-
-}, {collection: 'Thought'});
+);
 
 thoughtSchema
     .virtual('createdAtFormatted')

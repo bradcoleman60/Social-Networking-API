@@ -20,8 +20,6 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(routes);
 
-
-
 //Start Server with Connection to DB
 db.once('open', () => {
     app.listen(PORT, () => {
