@@ -8,11 +8,8 @@ const db = require('../config/connection')
 module.exports = {
     // Get all users
     getUsers(req, res) {
-        // console.log('Getting all users');
-        // console.log('Database:', db.socialnetworkDB);
-        // console.log('Collection:', User.collection.name)
-        User.find()
-        // .select('-__V')
+       User.find()
+        .select('-__V')
         .populate('thoughts')
         .populate('friends')
         .lean()
@@ -27,8 +24,8 @@ module.exports = {
         var userId = req.params.userId;
         console.log("req params.userId:", req.params.userId)
         User.findOne({_id: req.params.userId})
-        // .select('-__v')
-        // .populate('thought')
+        .select('-__v')
+        .populate('thoughts')
         .then((user) =>
             !user
             ? res.status(404).json({message: 'No such user with that ID'})
